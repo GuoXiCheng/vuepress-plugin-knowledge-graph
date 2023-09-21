@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "esnext", // 目标 ECMAScript 版本
+    // "module": "CommonJS", // 模块系统
+    "module": "esnext",
+    "moduleResolution": "node",
+    "outDir": "./dist", // 输出目录
+    "rootDir": "./src", // TypeScript 源代码目录
+    "strict": true, // 开启严格类型检查
+    "esModuleInterop": true // 启用模块交互兼容性
+  },
+  "include": ["src/**/*.ts"], // 包含的源文件
+  "exclude": ["node_modules"] // 排除的目录
+}
