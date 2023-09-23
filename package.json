@@ -5,13 +5,21 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc & npm run copy",
+    "clean": "rmdir /s /q dist",
+    "copy": "cpx \"src/**/*.{css,vue}\" dist"
   },
   "author": "Xicheng_Guo",
   "license": "MIT",
   "devDependencies": {
-    "@vuepress/client": "^2.0.0-beta.45",
+    "@babel/types": "^7.22.19",
+    "@vuepress/client": "2.0.0-beta.67",
+    "cpx": "^1.5.0",
     "typescript": "^5.2.2",
-    "vuepress": "^1.9.10"
+    "vuepress": "2.0.0-beta.67"
+  },
+  "dependencies": {
+    "vue": "^3.3.4"
   }
 }
