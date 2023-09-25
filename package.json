@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc & npm run copy",
+    "build": "npm run copy & tsc",
     "clean": "rmdir /s /q dist",
     "copy": "cpx \"src/**/*.{css,vue}\" dist"
   },
