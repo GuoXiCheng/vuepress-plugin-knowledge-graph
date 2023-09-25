@@ -7,7 +7,8 @@
     "outDir": "./dist", // 输出目录
     "rootDir": "./src", // TypeScript 源代码目录
     "strict": true, // 开启严格类型检查
-    "esModuleInterop": true // 启用模块交互兼容性
+    "esModuleInterop": true, // 启用模块交互兼容性
+    "allowJs": true
   },
   "include": ["src/**/*.ts"], // 包含的源文件
   "exclude": ["node_modules"] // 排除的目录

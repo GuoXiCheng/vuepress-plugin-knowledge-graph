@@ -1,17 +1,11 @@
 <template>
-    <span @click="clickSpan">@</span>
+    <span @click="clickSpan()">@</span>
 </template>
 
-<script>
-export default {
-    methods: {
-        clickSpan() {
-            console.log("span clicked");
-        },
-    },
+<script lang="ts" setup>
+const clickSpan = () => {
+    console.log("span clicked");
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
