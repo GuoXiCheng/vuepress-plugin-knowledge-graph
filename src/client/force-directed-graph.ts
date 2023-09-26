@@ -1,17 +1,18 @@
 import * as d3 from "d3";
+import { DocLink, DocNode } from "./config";
 
 export default class ForceDirectedGraph {
 
     private width: number;
     private height: number;
-    private nodes: Array<{ id: string; label: string }>;
-    private links: Array<{ source: string; target: string }>;
+    private nodes: DocNode[];
+    private links: DocLink[];
 
 
     constructor(
         container: HTMLElement,
-        nodes: Array<{ id: string; label: string }>,
-        links: Array<{ source: string; target: string }>) {
+        nodes: DocNode[],
+        links: DocLink[]) {
         this.nodes = nodes;
         this.links = links;
 
@@ -48,10 +49,14 @@ export default class ForceDirectedGraph {
     }
 
     private createSimulation() {
-        return d3.forceSimulation(this.nodes as any)
-            .force("link", d3.forceLink(this.links).id((d: any) => d.id).distance(100))
+        const simulation = d3.forceSimulation(this.nodes as any)
+            // .force("link", d3.forceLink(this.links).id((d: any) => d.id).distance(100))
             .force("charge", d3.forceManyBody())
             .force("center", d3.forceCenter(this.width / 2, this.height / 2));
+        if (Array.isArray(this.links) && this.links.length !== 0) {
+            simulation.force("link", d3.forceLink(this.links).id((d: any) => d.id).distance(100))
+        }
+        return simulation;
     }
 
     private createElements(svg: d3.Selection<SVGSVGElement, undefined, null, undefined>, simulation: d3.Simulation<d3.SimulationNodeDatum, undefined>) {
@@ -85,13 +90,16 @@ export default class ForceDirectedGraph {
     }
 
     private createLinkElements(svg: d3.Selection<SVGSVGElement, undefined, null, undefined>) {
-        return svg.append("g")
-            .attr("class", "links")
-            .selectAll("line")
-            .data(this.links)
-            .enter().append("line")
-            .attr("stroke", "#999")
-            .attr("stroke-width", 2);
+        if (Array.isArray(this.links) && this.links.length !== 0) {
+            return svg.append("g")
+                .attr("class", "links")
+                .selectAll("line")
+                .data(this.links)
+                .enter().append("line")
+                .attr("stroke", "#999")
+                .attr("stroke-width", 2);
+        }
+
     }
 
     private createNodeElements(svg: d3.Selection<SVGSVGElement, undefined, null, undefined>) {
@@ -116,10 +124,13 @@ export default class ForceDirectedGraph {
     }
 
     private updateElements(link: any, node: any, nodeText: any) {
-        link.attr("x1", (d: any) => d.source.x)
-            .attr("y1", (d: any) => d.source.y)
-            .attr("x2", (d: any) => d.target.x)
-            .attr("y2", (d: any) => d.target.y);
+        if (link) {
+            link.attr("x1", (d: any) => d.source.x)
+                .attr("y1", (d: any) => d.source.y)
+                .attr("x2", (d: any) => d.target.x)
+                .attr("y2", (d: any) => d.target.y);
+        }
+
 
         node.attr("cx", (d: any) => d.x)
             .attr("cy", (d: any) => d.y);
