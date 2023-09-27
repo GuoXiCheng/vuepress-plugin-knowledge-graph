@@ -4,6 +4,7 @@ import GraphContainer from './components/GraphContainer.vue';
 import { createApp, onMounted } from 'vue';
 import ForceDirectedGraph from './force-directed-graph';
 import { SimulationLinkDatum, SimulationNodeDatum } from 'd3';
+import { foo } from '@temp/foo'
 export interface DocNode extends SimulationNodeDatum {
     id: string;
     label: string;
@@ -29,21 +30,12 @@ export default defineClientConfig({
 
 
             const graphNodeContainer = document.getElementById("graph-node-container");
-            // const rect = graphNodeContainer!.getBoundingClientRect();
-            // const width = rect.width;
-            // const height = rect.height;
-            const nodes: DocNode[] = [
-                { id: "note1", label: "Note 1" },
-                { id: "note2", label: "Note 2" },
-                { id: "note3", label: "Note 3" },
-                { id: "note4", label: "Note 4" },
-                { id: "note5", label: "Note 5" }
-            ];
+            const nodes = foo;
 
             const links: DocLink[] = [
-                { source: "note1", target: "note2" },
-                { source: "note2", target: "note3" },
-                { source: "note1", target: "note3" }
+                // { source: "note1", target: "note2" },
+                // { source: "note2", target: "note3" },
+                // { source: "note1", target: "note3" }
             ];
 
             if (graphNodeContainer) {
