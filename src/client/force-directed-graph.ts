@@ -1,5 +1,5 @@
+import { DocNode, DocLink } from "@temp/knowledge-graph-data";
 import * as d3 from "d3";
-import { DocLink, DocNode } from "./config";
 
 export default class ForceDirectedGraph {
 

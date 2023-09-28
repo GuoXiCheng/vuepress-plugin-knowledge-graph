@@ -1,5 +1,6 @@
 import { fs, getDirname, path } from '@vuepress/utils'
 import { App } from "vuepress";
+import { getTempContent } from '../util';
 const __dirname = getDirname(import.meta.url);
 const knowledgeGraphPlugin = (app: App) => {
     return {
@@ -15,10 +16,12 @@ const knowledgeGraphPlugin = (app: App) => {
             // ];
             const nodes = app.pages.filter(item=>item.title.length !== 0).map(item=>({
                 id: item.title, label: item.title
+            }));
+            await app.writeTemp('knowledge-graph-data.js', getTempContent({
+                name: 'docLinks', value: 'hh'
+            }, {
+                name: 'docNodes', value: nodes
             }))
-            await app.writeTemp('foo.js', `
-                export const foo = ${JSON.stringify(nodes)}
-            `);
         }
     }
 }
