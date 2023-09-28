@@ -4,15 +4,8 @@ import GraphContainer from './components/GraphContainer.vue';
 import { createApp, onMounted } from 'vue';
 import ForceDirectedGraph from './force-directed-graph';
 import { SimulationLinkDatum, SimulationNodeDatum } from 'd3';
-import { foo } from '@temp/foo'
-export interface DocNode extends SimulationNodeDatum {
-    id: string;
-    label: string;
-}
+import { docNodes, DocLink } from '@temp/knowledge-graph-data';
 
-export interface DocLink extends SimulationLinkDatum<DocNode> {
-    
-}
 export default defineClientConfig({
     enhance({ app }) {
 
@@ -30,7 +23,6 @@ export default defineClientConfig({
 
 
             const graphNodeContainer = document.getElementById("graph-node-container");
-            const nodes = foo;
 
             const links: DocLink[] = [
                 // { source: "note1", target: "note2" },
@@ -39,7 +31,7 @@ export default defineClientConfig({
             ];
 
             if (graphNodeContainer) {
-                const forceDirectedGraph = new ForceDirectedGraph(graphNodeContainer, nodes, links).initialize();
+                const forceDirectedGraph = new ForceDirectedGraph(graphNodeContainer, docNodes, links).initialize();
                 if (forceDirectedGraph) {
                     document.getElementById("graph-node")?.appendChild(forceDirectedGraph);
                 }
