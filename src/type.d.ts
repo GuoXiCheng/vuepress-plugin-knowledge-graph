@@ -11,3 +11,11 @@ declare module '@temp/knowledge-graph-data' {
     export const docNodes: DocNode[];
     export const docLinks: DocLink[];
 }
+
+declare module 'knowledge-graph-types' { 
+    export type KnowledgeGraphOption = {
+        include?: string[],
+        exclude?: string[]
+    }
+}
+
