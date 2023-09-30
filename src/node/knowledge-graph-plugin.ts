@@ -17,21 +17,26 @@ const knowledgeGraphPlugin = (options: KnowledgeGraphOption) => {
                 //     { id: "note4", label: "Note 4" },
                 //     { id: "note5", label: "Note 5" }
                 // ];
+                const regexPattern = /\/([^/]+)\.md$/;
                 const nodes = app.pages.filter((item: Page) => {
-                    if (item.title.length === 0) return false;
+                    const match = item.filePath?.match(regexPattern);
+                    if (match == null) return false;
 
                     if (Array.isArray(options.include) && options.include.length !== 0) {
-                        const isInclude = options.include.some(pattern=>item.filePathRelative?.startsWith(pattern));
+                        const isInclude = options.include.some(pattern=>item.filePath?.startsWith(pattern));
                         if (isInclude) return true;
                     }
 
                     if (Array.isArray(options.exclude) && options.exclude.length !== 0) {
-                        return !options.exclude.some(pattern=>item.filePathRelative?.startsWith(pattern));
+                        console.log(item.filePath)
+                        console.log(options.exclude.some(pattern=>item.filePath?.includes(pattern)))
+                        return !options.exclude.some(pattern=>item.filePath?.includes(pattern));
                     }
                     return true;
-                }).map((item: any) => {
+                }).map((item: Page) => {
+                    const match = item.filePath?.match(regexPattern) as RegExpMatchArray;
                     return {
-                        id: item.title, label: item.title
+                        id: match[1], label: match[1]
                     }
                 });
                 await app.writeTemp('knowledge-graph-data.js', getTempContent({
