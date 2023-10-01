@@ -15,7 +15,8 @@ declare module '@temp/knowledge-graph-data' {
 declare module 'knowledge-graph-types' { 
     export type KnowledgeGraphOption = {
         include?: string[],
-        exclude?: string[]
+        exclude?: string[],
+        excludeReadme?: boolean
     }
 }
 

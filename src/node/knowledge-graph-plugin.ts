@@ -19,18 +19,25 @@ const knowledgeGraphPlugin = (options: KnowledgeGraphOption) => {
                 // ];
                 const regexPattern = /\/([^/]+)\.md$/;
                 const nodes = app.pages.filter((item: Page) => {
+
+                    if (typeof (options.excludeReadme) === 'boolean'
+                        && options.excludeReadme === true
+                        && item.filePath?.toLowerCase().endsWith('readme.md')) {
+                        return false;
+                    }
+
                     const match = item.filePath?.match(regexPattern);
-                    if (match == null) return false;
+                    if (match == null) {
+                        return false;
+                    }
 
                     if (Array.isArray(options.include) && options.include.length !== 0) {
-                        const isInclude = options.include.some(pattern=>item.filePath?.startsWith(pattern));
+                        const isInclude = options.include.some(pattern => item.filePath?.startsWith(pattern));
                         if (isInclude) return true;
                     }
 
                     if (Array.isArray(options.exclude) && options.exclude.length !== 0) {
-                        console.log(item.filePath)
-                        console.log(options.exclude.some(pattern=>item.filePath?.includes(pattern)))
-                        return !options.exclude.some(pattern=>item.filePath?.includes(pattern));
+                        return !options.exclude.some(pattern => item.filePath?.includes(pattern));
                     }
                     return true;
                 }).map((item: Page) => {
