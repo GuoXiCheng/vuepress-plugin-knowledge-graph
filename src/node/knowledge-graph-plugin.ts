@@ -1,6 +1,6 @@
 import { fs, getDirname, path } from '@vuepress/utils'
 import { App, Page } from "vuepress";
-import { getTempContent } from '../util';
+import { getTempContent } from '../utils';
 import { KnowledgeGraphOption } from 'knowledge-graph-types';
 
 const __dirname = getDirname(import.meta.url);
