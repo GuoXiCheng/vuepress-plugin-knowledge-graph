@@ -1,6 +1,6 @@
 import { fs, getDirname, path } from '@vuepress/utils'
 import { App, Page } from "vuepress";
-import { getTempContent } from '../utils';
+import { getDocNodes, getTempContent } from '../utils';
 import { KnowledgeGraphOption } from 'knowledge-graph-types';
 
 const __dirname = getDirname(import.meta.url);
@@ -17,39 +17,10 @@ const knowledgeGraphPlugin = (options: KnowledgeGraphOption) => {
                 //     { id: "note4", label: "Note 4" },
                 //     { id: "note5", label: "Note 5" }
                 // ];
-                const regexPattern = /\/([^/]+)\.md$/;
-                const nodes = app.pages.filter((item: Page) => {
-
-                    if (typeof (options.excludeReadme) === 'boolean'
-                        && options.excludeReadme === true
-                        && item.filePath?.toLowerCase().endsWith('readme.md')) {
-                        return false;
-                    }
-
-                    const match = item.filePath?.match(regexPattern);
-                    if (match == null) {
-                        return false;
-                    }
-
-                    if (Array.isArray(options.include) && options.include.length !== 0) {
-                        const isInclude = options.include.some(pattern => item.filePath?.startsWith(pattern));
-                        if (isInclude) return true;
-                    }
-
-                    if (Array.isArray(options.exclude) && options.exclude.length !== 0) {
-                        return !options.exclude.some(pattern => item.filePath?.includes(pattern));
-                    }
-                    return true;
-                }).map((item: Page) => {
-                    const match = item.filePath?.match(regexPattern) as RegExpMatchArray;
-                    return {
-                        id: match[1], label: match[1]
-                    }
-                });
                 await app.writeTemp('knowledge-graph-data.js', getTempContent({
                     name: 'docLinks', value: 'hh'
                 }, {
-                    name: 'docNodes', value: nodes
+                    name: 'docNodes', value: getDocNodes(app.pages,options)
                 }))
             }
         }
